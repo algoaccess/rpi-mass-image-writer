@@ -12,7 +12,7 @@ nowWriting = False
 
 lcd.clear()
 
-mypath = "images"
+imagePath = "images/"
 
 imageNames = []
 
@@ -43,7 +43,7 @@ def refreshSystem():
     global imageNames
     global listOfDrives
 
-    filesfound = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
+    filesfound = [ f for f in listdir(imagePath) if isfile(join(imagePath,f)) ]
 
     imageNames = []
     for file in filesfound:
@@ -84,6 +84,25 @@ def writeImage():
     if len(imageNames) == 0 or len(listOfDrives) == 0:
         return
 
+    constructCommand()
+
+
+def constructCommand():
+    command = "pv -e " + imagePath + imageNames[currentImageSelection] 
+    numDrives = len(listOfDrives)
+
+    firstDriveName = listOfDrives[0]
+    firstDriveCommand = " | dd of=/dev/" + firstDriveName + " bs=1M"
+
+
+    for i in range(1, numDrives):
+        nextDriveCommand = " | tee >(dd of=/dev/" + listOfDrives[i] + " bs=1M)"
+        command += nextDriveCommand
+
+
+    command += firstDriveCommand
+    print command
+    return command
 
 
 
