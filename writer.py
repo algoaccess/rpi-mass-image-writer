@@ -73,6 +73,10 @@ def runCommandAndGetStdout(cmd):
 
 def writeImage():
 
+    if len(imageNames) == 0 or len(listOfDrives) == 0:
+        return
+
+
 
 
 refreshSystem()
