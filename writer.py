@@ -35,6 +35,7 @@ def getConnectedDrives():
 def powerOff():
     lcd.clear()
     lcd.message("Shutting down...")
+    runCommandAndGetStdout("poweroff")
 
 
 
@@ -42,7 +43,14 @@ def refreshSystem():
     global imageNames
     global listOfDrives
 
-    imageNames = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
+    filesfound = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
+
+    imageNames = []
+    for file in filesfound:
+        if file != ".gitignore":
+            imageNames.append(file)
+
+
     currentImageSelection = 0;
     listOfDrives = getConnectedDrives()
 

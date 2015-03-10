@@ -1,0 +1,10 @@
+[Unit]
+Description=To start writer service on startup
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/root/rpi-mass-image-writer/startup.sh
