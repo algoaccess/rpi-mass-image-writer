@@ -1,6 +1,7 @@
 import time
 import shlex
 import os
+import subprocess
 from os import listdir
 from os.path import isfile, join
 from subprocess import Popen, PIPE
@@ -68,7 +69,15 @@ def refreshLcd():
 
     lcd.clear()
 
-    message = imageMessage + "\n" + str(numDrives) + " Drive(s)"
+    driveMessage = ""
+
+    if nowWriting:
+        driveMessage = "Writing now..."
+    else :
+        driveMessage = str(numDrives) + " Drive(s)"
+
+
+    message = imageMessage + "\n" + driveMessage
     lcd.message(message)
 
 
@@ -81,14 +90,29 @@ def runCommandAndGetStdout(cmd):
 
 def writeImage():
 
+    global nowWriting
+
     if len(imageNames) == 0 or len(listOfDrives) == 0:
         return
 
-    constructCommand()
+    imagingCommand = constructCommand()
+
+    nowWriting = True
+
+    refreshLcd()
+    os.system(imagingCommand)
+
+    nowWriting = False
+
+    refreshLcd()
+
+
+
+
 
 
 def constructCommand():
-    command = "pv -e " + imagePath + imageNames[currentImageSelection] 
+    command = "dd if=" + imagePath + "\"" +  imageNames[currentImageSelection] +  "\""
     numDrives = len(listOfDrives)
 
     firstDriveName = listOfDrives[0]
