@@ -81,7 +81,7 @@ def refreshLcd():
         driveMessage = str(numDrives) + " Drive(s)"
 
 
-    message = imageMessage + "\n" + driveMessage
+    message = imageMessage + "\n" + driveMessage + "\n"
     lcd.message(message)
 
 
