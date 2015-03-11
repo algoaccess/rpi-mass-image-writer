@@ -1,2 +1,2 @@
 cd /root/rpi-mass-image-writer
-/usr/bin/python2 writer.py &
+/usr/local/bin/python2 writer.py &
