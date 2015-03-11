@@ -61,22 +61,20 @@ nano /etc/samba/smb.conf
 workgroup = WORKGROUP
 server string = SD Duplicator
 security = user
-map to guest = Bad User
 log file = /var/log/samba/%m.log
 max log size = 50
 dns proxy = no
 
 [images]
 path = /root/rpi-mass-image-writer/images
-valid users = root
-public = yes
-guest ok = yes
 writable = yes
 #End
 
 
 #Create a user for samba
 smbpasswd -a root
+systemctl enable smbd nmbd
+
 ```
 
 
