@@ -20,12 +20,13 @@ Raspberry Pi that writes to many USB drives at one go.
 
 I use Arch Linux as it is stripped down and boots up far faster than Raspbian. With some modifications to the setup instructions, you can run this on Raspbian as well.
 
+##Configuring i2C
+
 ```bash
 pacman -Syu python2 i2c-tools samba
 
 modprobe i2c-dev
 echo "i2c-dev" > /etc/modules-load.d/i2c-dev.conf
-reboot
 ```
 
 On the latest versions of Arch Linux, it seems the i2c bus is disabled by default. We have to enable it. [Source](http://archlinuxarm.org/forum/viewtopic.php?f=31&t=8330)
@@ -85,8 +86,11 @@ systemctl enable writer.service
 reboot
 ```
 
-
-
-
-
-
+#References
+1. [Open Source Image Duplicator](https://github.com/rockandscissor/osid)
+2. [Adafruit Char Plate LCD](https://learn.adafruit.com/adafruit-16x2-character-lcd-plus-keypad-for-raspberry-pi/overview)
+3. [i2c setup on Arch Linux](http://cfedk.host.cs.st-andrews.ac.uk/site/?q=2013-pi)
+4. [Rpi 2 Model B 3D case top](http://www.thingiverse.com/thing:588608)
+5. [Rpi 2 Model B 3D case bottom](http://www.thingiverse.com/thing:582366)
+6. [Enable i2c on Arch Linux](http://archlinuxarm.org/forum/viewtopic.php?f=31&t=8330)
+7. [dd to multiple drives](https://joshhead.wordpress.com/2011/08/04/multiple-output-files-with-dd-utility/)
