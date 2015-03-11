@@ -2,6 +2,7 @@ import time
 import shlex
 import os
 import subprocess
+from threading import Thread
 from os import listdir
 from os.path import isfile, join
 from subprocess import Popen, PIPE
@@ -10,6 +11,7 @@ from Adafruit_CharLCDPlate import Adafruit_CharLCDPlate
 lcd = Adafruit_CharLCDPlate()
 
 nowWriting = False
+stopWritingNow = False
 
 lcd.clear()
 
@@ -89,28 +91,22 @@ def runCommandAndGetStdout(cmd):
     out, err = proc.communicate()
     return out
 
-
-def writeImage():
-
+def writeThreadFunction(arg):
     global nowWriting
     global writeStatusLine
+    global stopWritingNow
 
-    if len(imageNames) == 0 or len(listOfDrives) == 0:
-        return
-
-    imagingCommand = constructCommand()
-
-    nowWriting = True
-
-
-    writeStatusLine = "0"
-    refreshLcd()
-
-    process = Popen(imagingCommand, stdout=PIPE, stderr=PIPE, shell=True, executable='/bin/bash')
-
-
+    process = Popen(arg, stdout=PIPE, stderr=PIPE, shell=True, executable='/bin/bash')
     lines_iterator = iter(process.stderr.readline, b"")
     for line in lines_iterator:
+
+        if stopWritingNow :
+            runCommandAndGetStdout("killall pv")
+            runCommandAndGetStdout("killall dd")
+            process.kill()
+            stopWritingNow = False
+            break
+
 
         line = line.rstrip()
 
@@ -119,13 +115,30 @@ def writeImage():
             refreshLcd()
 
 
-
-
     nowWriting = False
 
     refreshLcd()
 
 
+def writeImage():
+
+    global nowWriting
+    global writeStatusLine
+    global stopWritingNow
+
+    if len(imageNames) == 0 or len(listOfDrives) == 0:
+        return
+
+    imagingCommand = constructCommand()
+
+    nowWriting = True
+    stopWritingNow = False
+
+    writeStatusLine = "0"
+    refreshLcd()
+
+    thread = Thread(target = writeThreadFunction, args = (imagingCommand, ))
+    thread.start()
 
 
 
@@ -156,6 +169,9 @@ while True:
     time.sleep(0.15) #To debounce and prevent excessive CPU use
 
     if lcd.buttonPressed(lcd.UP):
+        if nowWriting :
+            continue
+
         currentImageSelection += 1
         
         if currentImageSelection >= len(imageNames):
@@ -164,6 +180,9 @@ while True:
         refreshLcd()
 
     elif lcd.buttonPressed(lcd.DOWN):
+        if nowWriting :
+            continue
+
         currentImageSelection -= 1
         
         if currentImageSelection < 0:
@@ -173,12 +192,18 @@ while True:
 
 
     if lcd.buttonPressed(lcd.LEFT):
-       refreshSystem()
-       refreshLcd()
+        if nowWriting :
+            continue
+
+        refreshSystem()
+        refreshLcd()
     
     elif lcd.buttonPressed(lcd.SELECT):
-       powerOff()
+        powerOff()
 
 
     elif lcd.buttonPressed(lcd.RIGHT):
-        writeImage()
+        if nowWriting :
+            stopWritingNow = True
+        else :
+            writeImage()
