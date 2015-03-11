@@ -75,7 +75,14 @@ writable = yes
 #Create a user for samba
 smbpasswd -a root
 systemctl enable smbd nmbd
+```
 
+##Starting on boot
+
+```bash
+cp /root/rpi-mass-image-writer/writer.service /etc/systemd/system/
+systemctl enable writer.service
+reboot
 ```
 
 
