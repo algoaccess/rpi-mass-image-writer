@@ -20,6 +20,8 @@ imageNames = []
 currentImageSelection = 0
 listOfDrives = []
 
+writeStatusLine = ""
+
 def getConnectedDrives():
     commandOutput = runCommandAndGetStdout("lsblk -d | awk -F: '{print $1}' | awk '{print $1}'")
     splitted = commandOutput.splitlines()
@@ -72,7 +74,7 @@ def refreshLcd():
     driveMessage = ""
 
     if nowWriting:
-        driveMessage = "Writing now..."
+        driveMessage = writeStatusLine + "% complete"
     else :
         driveMessage = str(numDrives) + " Drive(s)"
 
@@ -91,6 +93,7 @@ def runCommandAndGetStdout(cmd):
 def writeImage():
 
     global nowWriting
+    global writeStatusLine
 
     if len(imageNames) == 0 or len(listOfDrives) == 0:
         return
@@ -99,8 +102,24 @@ def writeImage():
 
     nowWriting = True
 
+
+    writeStatusLine = "0"
     refreshLcd()
-    os.system(imagingCommand)
+
+    process = Popen(imagingCommand, stdout=PIPE, stderr=PIPE, shell=True, executable='/bin/bash')
+
+
+    lines_iterator = iter(process.stderr.readline, b"")
+    for line in lines_iterator:
+
+        line = line.rstrip()
+
+        if writeStatusLine != line:
+            writeStatusLine = line
+            refreshLcd()
+
+
+
 
     nowWriting = False
 
@@ -112,7 +131,7 @@ def writeImage():
 
 
 def constructCommand():
-    command = "dd if=" + imagePath + "\"" +  imageNames[currentImageSelection] +  "\""
+    command = "pv -n " + imagePath + "\"" +  imageNames[currentImageSelection] +  "\""
     numDrives = len(listOfDrives)
 
     firstDriveName = listOfDrives[0]
