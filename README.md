@@ -8,7 +8,7 @@ Raspberry Pi that writes to many USB drives at one go.
 4. Hit left button to enumerate all images and drives 
 5. Use up/down buttons to select image
 6. Press the right button to start writing to drives. You can press it again to terminate writing.
-7. Press the select button (extreme left) to shutdown device properly
+7. Press the select button (extreme left) to shutdown device properly to prevent data corruption. The words "Shutting down" will remain even after the device has completely shutdown, so just wait for the activity light to turn off before pulling the power.
 
 #Hardware
 1. Raspberry Pi 2 Model B (Others will work just as fine)
