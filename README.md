@@ -2,12 +2,13 @@
 Raspberry Pi that writes to many USB drives at one go.
 
 #How to use?
-1. Transfer image files via samba to shared folder
-2. Plug in all USB flash drives to write to
-3. Hit left button to enumerate all images and drives 
-4. Use up/down buttons to select image
-5. Press the right button to start writing to drives. You can press it again to terminate writing.
-6. Press the select button (extreme left) to shutdown device properly
+1. Login to shared folder
+2. Transfer image files via samba to shared folder
+3. Plug in all USB flash drives to write to
+4. Hit left button to enumerate all images and drives 
+5. Use up/down buttons to select image
+6. Press the right button to start writing to drives. You can press it again to terminate writing.
+7. Press the select button (extreme left) to shutdown device properly
 
 #Hardware
 1. Raspberry Pi 2 Model B (Others will work just as fine)
