@@ -170,6 +170,7 @@ while True:
 
     if lcd.buttonPressed(lcd.UP):
         if nowWriting :
+            stopWritingNow = True
             continue
 
         currentImageSelection += 1
@@ -181,6 +182,7 @@ while True:
 
     elif lcd.buttonPressed(lcd.DOWN):
         if nowWriting :
+            stopWritingNow = True
             continue
 
         currentImageSelection -= 1
@@ -193,6 +195,7 @@ while True:
 
     if lcd.buttonPressed(lcd.LEFT):
         if nowWriting :
+            stopWritingNow = True
             continue
 
         refreshSystem()
