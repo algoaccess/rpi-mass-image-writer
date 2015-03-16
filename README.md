@@ -75,7 +75,7 @@ writable = yes
 
 #Create a user for samba
 smbpasswd -a root
-systemctl enable smbd nmbd
+systemctl enable smbd
 ```
 
 ##Starting on boot
