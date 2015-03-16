@@ -28,6 +28,8 @@ listOfDrives = []
 
 writeStatusLine = ""
 
+justCompleted = False
+
 def getConnectedDrives():
     commandOutput = runCommandAndGetStdout("lsblk -d | awk -F: '{print $1}' | awk '{print $1}'")
     splitted = commandOutput.splitlines()
@@ -82,7 +84,10 @@ def refreshLcd():
     if nowWriting:
         driveMessage = writeStatusLine + "% complete"
     else :
-        driveMessage = str(numDrives) + " Drive(s)"
+        if justCompleted :
+            driveMessage = "Write complete!"
+        else :
+            driveMessage = str(numDrives) + " Drive(s)"
 
     lcd.setCursor(0, 0)
     lcd.message(imageMessage)
@@ -125,7 +130,7 @@ def writeThreadFunction(arg):
 
 
     nowWriting = False
-
+    justCompleted = True
     refreshLcd()
 
 
@@ -182,6 +187,7 @@ while True:
             stopWritingNow = True
             continue
 
+        justCompleted = False
         currentImageSelection += 1
         
         if currentImageSelection >= len(imageNames):
@@ -194,6 +200,7 @@ while True:
             stopWritingNow = True
             continue
 
+        justCompleted = False
         currentImageSelection -= 1
         
         if currentImageSelection < 0:
@@ -207,14 +214,18 @@ while True:
             stopWritingNow = True
             continue
 
+        justCompleted = False
         refreshSystem()
         refreshLcd()
     
     elif lcd.buttonPressed(lcd.SELECT):
+        justCompleted = False
         powerOff()
 
 
     elif lcd.buttonPressed(lcd.RIGHT):
+        justCompleted = False
+        
         if nowWriting :
             stopWritingNow = True
         else :
