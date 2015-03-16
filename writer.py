@@ -126,6 +126,9 @@ def writeThreadFunction(arg):
 
 
         line = line.rstrip()
+        
+        if line == "100" :
+            line = "99" #To not give the impression that write has completed as the value stays at 100% for some time
 
         if writeStatusLine != line:
             writeStatusLine = line
