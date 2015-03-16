@@ -15,6 +15,7 @@ Raspberry Pi that writes to many USB drives at one go.
 2. Adafruit i2c 16x2 LCD Pi Plate with keypad
 3. USB hubs (not all hubs are supported well, use the ones from this [list](http://elinux.org/RPi_Powered_USB_Hubs))
 4. USB SD card adapters
+5. USB Gigabit adapter (optional)
 
 #Setting up
 
@@ -76,6 +77,21 @@ writable = yes
 #Create a user for samba
 smbpasswd -a root
 systemctl enable smbd
+```
+
+##Using a separate USB Gigabit adapter
+
+Transfering large image files takes a long time on the internal 10/100 adapter so I opted to use a Gigabit adapter instead. Note that Pi is using USB2.0 with other devices sharing the bus so the speed up just about 2x which is pretty good.
+
+```bash
+cp /etc/netctl/examples/ethernet-dhcp /etc/netctl/eth1
+nano /etc/netctl/eth1
+
+#Change the "Interface" value from eth0 to eth1
+
+netctl enable eth1
+reboot
+#Test the network connection
 ```
 
 ##Starting on boot
