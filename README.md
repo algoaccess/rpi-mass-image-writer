@@ -1,5 +1,5 @@
 # rpi-mass-image-writer
-Raspberry Pi that writes to many USB drives at one go.
+Raspberry Pi that writes to many USB drives at one go. Hardware buttons available to select the stored disk image to copy as well as to shutdown the device. Disk images are transferred to the Raspberry Pi via a Samba shared folder.
 
 ![Screen](/photos/front-idle-with-case.jpg)
 
