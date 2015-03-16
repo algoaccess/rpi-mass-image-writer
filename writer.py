@@ -190,7 +190,11 @@ while True:
             stopWritingNow = True
             continue
 
-        justCompleted = False
+
+        if justCompleted :
+            justCompleted = False
+            continue
+        
         currentImageSelection += 1
         
         if currentImageSelection >= len(imageNames):
@@ -203,7 +207,10 @@ while True:
             stopWritingNow = True
             continue
 
-        justCompleted = False
+        if justCompleted :
+            justCompleted = False
+            continue
+
         currentImageSelection -= 1
         
         if currentImageSelection < 0:
@@ -217,7 +224,10 @@ while True:
             stopWritingNow = True
             continue
 
-        justCompleted = False
+        if justCompleted :
+            justCompleted = False
+            continue
+        
         refreshSystem()
         refreshLcd()
     
@@ -227,7 +237,9 @@ while True:
 
 
     elif lcd.buttonPressed(lcd.RIGHT):
-        justCompleted = False
+        if justCompleted :
+            justCompleted = False
+            continue
         
         if nowWriting :
             stopWritingNow = True
