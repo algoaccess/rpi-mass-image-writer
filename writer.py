@@ -226,7 +226,7 @@ while True:
             currentImageSelection -= 1
         
             if currentImageSelection < 0:
-                    currentImageSelection = len(imageNames) - 1
+                currentImageSelection = len(imageNames) - 1
 
             refreshLcd()
 
