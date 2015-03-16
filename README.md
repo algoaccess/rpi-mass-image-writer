@@ -1,6 +1,14 @@
 # rpi-mass-image-writer
 Raspberry Pi that writes to many USB drives at one go.
 
+![Screen](/photos/front-idle-with-case.jpg)
+
+Everything in with a nice 3D printed case.
+
+![Screen](/photos/front-writing-no-case.jpg)
+
+The innards
+
 #How to use?
 1. Login to shared folder
 2. Transfer image files via samba to shared folder
