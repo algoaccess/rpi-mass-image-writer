@@ -1,5 +1,7 @@
 # rpi-mass-image-writer
-Raspberry Pi that writes to many USB drives at one go. Hardware buttons available to select the stored disk image to copy as well as to shutdown the device. Disk images are transferred to the Raspberry Pi via a Samba shared folder.
+Raspberry Pi that writes to many USB drives at one go. Hardware buttons available to select the stored disk image to copy as well as to shutdown the device. 
+
+Disk images are transferred to the Raspberry Pi via a Samba shared folder. The selected image is then written in parallel to all the drives at once using the ```dd```, ```pv``` and ```tee``` commands 
 
 ![Screen](/photos/front-idle-with-case.jpg)
 
@@ -19,7 +21,7 @@ The innards
 7. Press the select button (extreme left) to shutdown device properly to prevent data corruption. The words "Shutting down" will remain even after the device has completely shutdown, so just wait for the activity light to turn off before pulling the power.
 
 #Hardware
-1. Raspberry Pi 2 Model B (Others will work just as fine)
+1. Raspberry Pi 2 Model B (Others will work just as well)
 2. Adafruit i2c 16x2 LCD Pi Plate with keypad
 3. USB hubs (not all hubs are supported well, use the ones from this [list](http://elinux.org/RPi_Powered_USB_Hubs))
 4. USB SD card adapters
@@ -44,7 +46,7 @@ On the latest versions of Arch Linux, it seems the i2c bus is disabled by defaul
 nano /boot/config.txt
 
 #Add the following lines
-device_tree=bcm2709-rpi-2-b.dtb  #Replace this line with "bcm2708-rpi-b.dtb" or "bcm2708-rpi-b-plus.dtb" depending on your Raspberry Pi type.
+device_tree=bcm2709-rpi-2-b.dtb  #Replace the value with "bcm2708-rpi-b.dtb" or "bcm2708-rpi-b-plus.dtb" depending on your Raspberry Pi type.
 device_tree_param=i2c1=on
 device_tree_param=spi=on
 
