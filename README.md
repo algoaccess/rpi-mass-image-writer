@@ -102,7 +102,7 @@ hostnamectl set-hostname pi-sd-replicator
 
 ##Using a separate USB Gigabit adapter
 
-Transfering large image files takes a long time on the internal 10/100 adapter so I opted to use a Gigabit adapter instead. Note that Pi is using USB2.0 with other devices sharing the bus so the speed up is just about 2x which is good enough.
+Transfering large image files takes a long time on the internal 10/100 adapter so I opted to use a Gigabit adapter instead. Note that Pi is using just USB 2.0 with other devices sharing the bus so the speedup is only just about 2x instead of 10x faster which is still better than previously.
 
 ```bash
 cp /etc/netctl/examples/ethernet-dhcp /etc/netctl/eth1
