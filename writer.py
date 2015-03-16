@@ -30,6 +30,9 @@ writeStatusLine = ""
 
 justCompleted = False
 
+lastPressedTime = time.time()
+
+
 def getConnectedDrives():
     commandOutput = runCommandAndGetStdout("lsblk -d | awk -F: '{print $1}' | awk '{print $1}'")
     splitted = commandOutput.splitlines()
@@ -186,65 +189,77 @@ refreshSystem()
 refreshLcd()
 
 while True:
-    time.sleep(0.15) #To debounce and prevent excessive CPU use
-
-    if lcd.buttonPressed(lcd.UP):
-        if nowWriting :
-            stopWritingNow = True
-            continue
-
-
-        if justCompleted :
-            justCompleted = False
-            continue
-        
-        currentImageSelection += 1
-        
-        if currentImageSelection >= len(imageNames):
-            currentImageSelection = 0
-
-        refreshLcd()
-
-    elif lcd.buttonPressed(lcd.DOWN):
-        if nowWriting :
-            stopWritingNow = True
-            continue
-
-        if justCompleted :
-            justCompleted = False
-            continue
-
-        currentImageSelection -= 1
-        
-        if currentImageSelection < 0:
-            currentImageSelection = len(imageNames) - 1
-
-        refreshLcd()
-
-
-    if lcd.buttonPressed(lcd.LEFT):
-        if nowWriting :
-            stopWritingNow = True
-            continue
-
-        if justCompleted :
-            justCompleted = False
-            continue
-        
-        refreshSystem()
-        refreshLcd()
+    time.sleep(0.01) #To prevent excessive CPU use
+    currentTime = time.time()
     
-    elif lcd.buttonPressed(lcd.SELECT):
-        justCompleted = False
-        powerOff()
+    if (currentTime - lastPressedTime) >= 0.2:
+
+        if lcd.buttonPressed(lcd.UP):
+            lastPressedTime = currentTime
+            
+            if nowWriting :
+                stopWritingNow = True
+                continue
 
 
-    elif lcd.buttonPressed(lcd.RIGHT):
-        if justCompleted :
-            justCompleted = False
-            continue
+            if justCompleted :
+                justCompleted = False
+                continue
         
-        if nowWriting :
-            stopWritingNow = True
-        else :
-            writeImage()
+            currentImageSelection += 1
+                
+            if currentImageSelection >= len(imageNames):
+                currentImageSelection = 0
+                refreshLcd()
+
+        elif lcd.buttonPressed(lcd.DOWN):
+            lastPressedTime = currentTime
+            
+            if nowWriting :
+                stopWritingNow = True
+                continue
+
+            if justCompleted :
+                justCompleted = False
+                continue
+
+            currentImageSelection -= 1
+        
+            if currentImageSelection < 0:
+                    currentImageSelection = len(imageNames) - 1
+
+            refreshLcd()
+
+
+        if lcd.buttonPressed(lcd.LEFT):
+            lastPressedTime = currentTime
+            
+            if nowWriting :
+                stopWritingNow = True
+                continue
+
+            if justCompleted :
+                justCompleted = False
+                continue
+        
+            refreshSystem()
+            refreshLcd()
+    
+        elif lcd.buttonPressed(lcd.SELECT):
+            lastPressedTime = currentTime
+            
+            justCompleted = False
+            powerOff()
+
+
+        elif lcd.buttonPressed(lcd.RIGHT):
+            lastPressedTime = currentTime
+            
+            if justCompleted :
+                justCompleted = False
+                continue
+        
+            if nowWriting :
+                stopWritingNow = True
+            else :
+                writeImage()
