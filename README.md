@@ -20,10 +20,10 @@ Raspberry Pi that writes to many USB drives at one go.
 
 I use Arch Linux as it is stripped down and boots up far faster than Raspbian. With some modifications to the setup instructions, you can run this on Raspbian as well.
 
-##Configuring i2C
+##Installing packages and configuring i2C
 
 ```bash
-pacman -Syu python2 i2c-tools samba
+pacman -Syu python2 i2c-tools samba git
 
 modprobe i2c-dev
 echo "i2c-dev" > /etc/modules-load.d/i2c-dev.conf
