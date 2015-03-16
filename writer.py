@@ -119,7 +119,6 @@ def writeThreadFunction(arg):
             runCommandAndGetStdout("killall pv")
             runCommandAndGetStdout("killall dd")
             process.kill()
-            stopWritingNow = False
             break
 
 
@@ -130,7 +129,11 @@ def writeThreadFunction(arg):
             refreshLcd()
 
 
-    if not stopWritingNow :
+
+    if stopWritingNow :
+        stopWritingNow = False
+        justCompleted = False
+    else :
         justCompleted = True
 
     nowWriting = False
