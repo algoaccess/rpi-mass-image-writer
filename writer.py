@@ -210,7 +210,8 @@ while True:
                 
             if currentImageSelection >= len(imageNames):
                 currentImageSelection = 0
-                refreshLcd()
+            
+            refreshLcd()
 
         elif lcd.buttonPressed(lcd.DOWN):
             lastPressedTime = currentTime
