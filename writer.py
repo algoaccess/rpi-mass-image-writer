@@ -13,6 +13,10 @@ lcd = Adafruit_CharLCDPlate()
 nowWriting = False
 stopWritingNow = False
 
+COLUMNS = 16
+ROWS = 2
+
+lcd.begin(COLUMNS, ROWS)
 lcd.clear()
 
 imagePath = "images/"
@@ -69,7 +73,7 @@ def refreshLcd():
     if numImages == 0:
         imageMessage = "No images found"
     else:
-        imageMessage = imageNames[currentImageSelection]
+        imageMessage = imageNames[currentImageSelection][:COLUMNS]
 
     lcd.clear()
 
@@ -80,9 +84,14 @@ def refreshLcd():
     else :
         driveMessage = str(numDrives) + " Drive(s)"
 
+    lcd.setCursor(0, 0)
+    lcd.message(imageMessage)
+    print imageMessage
 
-    message = imageMessage + "\n" + driveMessage + "\n"
-    lcd.message(message)
+    lcd.setCursor(0, 1)
+    lcd.message(driveMessage)
+    print driveMessage
+
 
 
 
