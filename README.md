@@ -23,7 +23,7 @@ I use Arch Linux as it is stripped down and boots up far faster than Raspbian. W
 ##Installing packages and configuring i2C
 
 ```bash
-pacman -Syu python2 i2c-tools samba git
+pacman -Syu python2 i2c-tools samba pv git
 
 modprobe i2c-dev
 echo "i2c-dev" > /etc/modules-load.d/i2c-dev.conf
