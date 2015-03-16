@@ -109,6 +109,7 @@ def writeThreadFunction(arg):
     global nowWriting
     global writeStatusLine
     global stopWritingNow
+    global justCompleted
 
     process = Popen(arg, stdout=PIPE, stderr=PIPE, shell=True, executable='/bin/bash')
     lines_iterator = iter(process.stderr.readline, b"")
@@ -129,8 +130,10 @@ def writeThreadFunction(arg):
             refreshLcd()
 
 
+    if stopWritingNow :
+        justCompleted = True
+
     nowWriting = False
-    justCompleted = True
     refreshLcd()
 
 
