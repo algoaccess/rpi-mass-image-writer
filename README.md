@@ -97,7 +97,7 @@ systemctl enable smbd
 In case you don't like the default ```alarmpi``` hostname.
 
 ```bash
-hostnamectl set-hostname pi-sd-replicator
+hostnamectl set-hostname pi-usb-replicator
 ```
 
 ##Using a separate USB Gigabit adapter
