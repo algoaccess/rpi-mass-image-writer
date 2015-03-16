@@ -130,7 +130,7 @@ def writeThreadFunction(arg):
             refreshLcd()
 
 
-    if stopWritingNow :
+    if not stopWritingNow :
         justCompleted = True
 
     nowWriting = False
