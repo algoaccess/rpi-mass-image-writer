@@ -78,7 +78,7 @@ def refreshLcd():
     if numImages == 0:
         imageMessage = "No images found"
     else:
-        imageMessage = imageNames[currentImageSelection][:COLUMNS]
+        imageMessage = imageNames[currentImageSelection]
 
     lcd.clear()
 
@@ -93,11 +93,11 @@ def refreshLcd():
             driveMessage = str(numDrives) + " Drive(s)"
 
     lcd.setCursor(0, 0)
-    lcd.message(imageMessage)
+    lcd.message(imageMessage[:COLUMNS])
     print imageMessage
 
     lcd.setCursor(0, 1)
-    lcd.message(driveMessage)
+    lcd.message(driveMessage[:COLUMNS])
     print driveMessage
 
 
