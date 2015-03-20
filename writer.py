@@ -8,17 +8,8 @@ from os.path import isfile, join
 from subprocess import Popen, PIPE
 from Adafruit_CharLCDPlate import Adafruit_CharLCDPlate
 
-lcd = Adafruit_CharLCDPlate()
-
-nowWriting = False
-stopWritingNow = False
-
 COLUMNS = 16
 ROWS = 2
-
-lcd.begin(COLUMNS, ROWS)
-lcd.clear()
-
 imagePath = "images/"
 
 imageNames = []
@@ -29,9 +20,14 @@ listOfDrives = []
 writeStatusLine = ""
 
 justCompleted = False
+nowWriting = False
+stopWritingNow = False
 
 lastPressedTime = time.time()
 
+lcd = Adafruit_CharLCDPlate()
+lcd.begin(COLUMNS, ROWS)
+lcd.clear()
 
 def getConnectedDrives():
     commandOutput = runCommandAndGetStdout("lsblk -d | awk -F: '{print $1}' | awk '{print $1}'")
